@@ -1,0 +1,41 @@
+body.light-theme {
+  --text-color: #000;
+  --background-color: #fff;
+  --anchor-color: #4f3674;
+  --h1-background-color: #3c275a;
+  --h1-border-color: #d6a800;
+  --heading-background-color: #3c275a;
+  --heading-color: #fff;
+  --heading-border-color: #d6a800;
+  --anchor-hover-color: #4f3674;
+  --anchor-hover-background-color: #d6a800;
+  --card-background-color: #fff;
+  --card-title-color: #4f3674;
+  --card-background-color: #fff;
+  --btn-background-color: #4f3674;
+  --btn-color: #fff;
+  --btn-hover-background-color: #d6a800;
+  --btn-hover-color: #4f3674;
+  --input-border-color: #ccc;
+}
+
+body.dark-theme {
+  --text-color: #fafafa;
+  --background-color: #303030;
+  --anchor-color: #fff;
+  --h1-background-color: #9c27b0;
+  --h1-border-color: #9c27b0;
+  --heading-background-color: #424242;
+  --heading-color: #fff;
+  --heading-border-color: #424242;
+  --anchor-hover-color: #d176e1;
+  --anchor-hover-background-color: #303030;
+  --card-background-color: #424242;
+  --card-title-color: #d176e1;
+  --card-background-color: #424242;
+  --btn-background-color: #d176e1;
+  --btn-color: #fff;
+  --btn-hover-background-color: #7d4787;
+  --btn-hover-color: #fff;
+  --input-border-color: #303030;
+}
