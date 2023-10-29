@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>WEB 330 – Enterprise JavaScript II</title>
+    <link rel="stylesheet" href="../theme.css" />
+    <link rel="stylesheet" href="../site.css" />
+    <link rel="stylesheet" href="lates-palindrome.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!--
+        Programming cites
+
+        1. Code adapted from W3Schools  https://www.w3schools.com/html/html_forms.asp
+        2. Code adapted from W3Schools https://www.w3schools.com/js/js_dates.asp
+        3. code adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat
+        4. Code adapted from https://www.w3schools.com/jsref/jsref_split.asp
+        5. Code adapted from https://www.w3schools.com/jsref/jsref_reverse.asp#:~:text=The%20reverse()%20method%20reverses,method%20overwrites%20the%20original%20array.
+        6. Code Adapted from https://www.freecodecamp.org/news/how-to-format-dates-in-javascript/
+
+
+    -->
+    <div id="container">
+      <h1 class="app-header">Welcome to the Palindrome App!</h1>
+      <div class="input-card">
+        <h2 class="card-title">Palindrome Checker</h2>
+        <div class="form-field">
+          <label id="lblPhrase" for="txtPhrase">Phrase value:</label>
+          <input type="text" id="txtPhrase" name="txtPhrase" />
+          <br />
+          <input type="submit" id="btnSubmit" value="Check Phrase" />
+        </div>
+      </div>
+      <div id="home-div">
+        <a class="return-home" href="../index.html">Return</a>
+      </div>
+      <div class="results-card">
+        <h2 class="card-title">Palindrome Results</h2>
+        <div id="assign-results"></div>
+        <div id="assign-results-text"></div>
+      </div>
+    </div>
+    <script>
+      /* This function returns en-US formatted date */
+      function getTodaysDate() {
+        let todaysDate = new Date();
+        return todaysDate.toLocaleDateString("en-US");
+      }
+      /* This function gets the length of the phrase */
+      function getLength(inputValue) {
+        return inputValue.length;
+      }
+      /* This function reverses the order of the phrase */
+      function reverse(inputValue) {
+        let myArray = inputValue.split("");
+
+        let myReverseArray = myArray.reverse();
+
+        let myString = myReverseArray.join("");
+
+        return myString;
+      }
+      /* This function returns true if the phrase is a palindrome or false if not */
+      function isPalindrome(inputValue) {
+        let reverseString = reverse(inputValue);
+
+        if (inputValue === reverseString) return true;
+        else return false;
+      }
+
+      /* Register btnFindLetter for onclick function  */
+      document.getElementById("btnSubmit").onclick = function () {
+        let phrase = document.getElementById("txtPhrase").value;
+
+        /* Get today's date */
+        let today = getTodaysDate();
+
+        /* Get phrase length */
+        let len = getLength(phrase);
+
+        /* Get reversed phrase */
+        let reversedPhrase = reverse(phrase);
+
+        let header = `Date: ${today} <br> Original Phrase: ${phrase} <br> Reversed Phrase: ${reversedPhrase} <br> Phrase Length: ${len}`;
+
+        document.getElementById("assign-results").innerHTML = header;
+
+        let results = isPalindrome(phrase.toLowerCase());
+
+        let returnMessage = "";
+
+        /* Check to see if the it is actually a palindrome. Write out formatted return message with results */
+        if (results === true) {
+          returnMessage = `${phrase}` + "<b><u> is </b></u> a palindrome";
+        } else {
+          returnMessage = `${phrase}` + "<b><u> is not </b></u> a palindrome";
+        }
+
+        document.getElementById("assign-results-text").innerHTML =
+          returnMessage;
+      };
+    </script>
+  </body>
+</html>
