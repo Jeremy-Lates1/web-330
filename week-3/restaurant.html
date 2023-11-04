@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>WEB 330 – Enterprise JavaScript II</title>
+    <link rel="stylesheet" href="../theme.css" />
+    <link rel="stylesheet" href="../site.css" />
+    <link rel="stylesheet" href="restaurant.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!--
+        Programming cites
+
+        1. Code adapted from geeksforgeeks.org  https://www.geeksforgeeks.org/how-to-float-three-div-side-by-side-using-css/
+        2. Code adapted from 3Schools.com https://www.w3schools.com/css/tryit.asp?filename=trycss_grid
+        3. Code adapted from 3Schools.com https://www.w3schools.com/tags/att_input_type_checkbox.asp
+        4. Code adapted from 3Schools.com https://www.w3schools.com/js/js_loop_forof.asp
+        5. Code adapted from 3Schools.com https://www.w3schools.com/jsref/jsref_foreach.asp
+        
+
+
+    -->
+    <div id="container">
+      <h1 class="app-header">Welcome to the Restaurant App!</h1>
+      <div class="input-card">
+        <h2 class="card-title">Restaurant Menu</h2>
+        <div class="grid-container">
+          <div id="beverages" class="grid-item card-title">
+            Beverages <br />
+            <div class="align-left">
+              <input type="checkbox" id="soda" name="soda" value="3.30" />
+              <label for="soda">Soda ($3.30)</label><br />
+              <input
+                type="checkbox"
+                id="sweet-tea"
+                name="sweet-tea"
+                value="3.30"
+              />
+              <label for="sweet-tea">Sweet Tea ($3.30)</label><br />
+              <input
+                type="checkbox"
+                id="iced-coffee"
+                name="iced-coffee"
+                value="2.49"
+              />
+              <label for="iced-coffee">Iced Coffee ($2.49)</label><br />
+              <input
+                type="checkbox"
+                id="bottled-water"
+                name="bottled-water"
+                value="2.15"
+              />
+              <label for="bottled-water">Bottled Water ($2.15)</label>
+            </div>
+          </div>
+          <div id="appetizers" class="grid-item card-title">
+            Appetizers <br />
+            <div class="align-left">
+              <input type="checkbox" id="nachos" name="nachos" value="6.60" />
+              <label for="nachos">Nachos ($6.60)</label><br />
+              <input
+                type="checkbox"
+                id="chips-salsa"
+                name="chips-salsa"
+                value="5.50"
+              />
+              <label for="chips-salsa">Chips and Salsa ($5.50)</label><br />
+              <input
+                type="checkbox"
+                id="pretzel-cheese"
+                name="pretzel-cheese"
+                value="8.80"
+              />
+              <label for="pretzel-cheese">Pretzel and Cheese ($8.80)</label
+              ><br />
+              <input
+                type="checkbox"
+                id="fried-pickles"
+                name="fried-pickles"
+                value="8.25"
+              />
+              <label for="fried-pickles">Fried Pickles ($8.25)</label>
+            </div>
+          </div>
+          <div id="main-courses" class="grid-item card-title">
+            Main Courses <br />
+            <div class="align-left">
+              <input
+                type="checkbox"
+                id="street-tacos"
+                name="street-tacos"
+                value="9.70"
+              />
+              <label for="street-tacos">Street Tacos ($9.70)</label><br />
+              <input
+                type="checkbox"
+                id="boneless-wings"
+                name="boneless-wings"
+                value="12.80"
+              />
+              <label for="boneless-wings">Boneless Wings ($12.80)</label><br />
+              <input
+                type="checkbox"
+                id="cheeseburger-fries"
+                name="cheeseburger-fries"
+                value="12.65"
+              />
+              <label for="cheeseburger-fries"
+                >Cheeseburger with Fries ($12.65)</label
+              ><br />
+              <input
+                type="checkbox"
+                id="chickenwrap-salad"
+                name="chickenwrap-salad"
+                value="9.65"
+              />
+              <label for="chickenwrap-salad"
+                >Chicken Wrap with Salad ($9.65)</label
+              >
+            </div>
+          </div>
+          <div id="desserts" class="grid-item card-title">
+            Desserts <br />
+            <div class="align-left">
+              <input
+                type="checkbox"
+                id="ice-cream"
+                name="ice-cream"
+                value="4.30"
+              />
+              <label for="ice-cream">Ice Cream ($4.30)</label><br />
+              <input
+                type="checkbox"
+                id="chocolate-cake"
+                name="chocolate-cake"
+                value="5.40"
+              />
+              <label for="chocolate-cake">Chocolate Cake ($5.40)</label><br />
+              <input
+                type="checkbox"
+                id="apple-pie"
+                name="apple-pie"
+                value="3.80"
+              />
+              <label for="apple-pie">Apple Pie ($3.80)</label><br />
+              <button type="button" id="btnOrder">Place Order</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="home-div">
+        <a class="return-home" href="../index.html">Return</a>
+      </div>
+      <div id="order-total" class="assign-results-text">
+        <h2 class="order-summary">Order Summary</h2>
+        <p class="total"><span id="total"></span></p>
+      </div>
+    </div>
+    <script type="module">
+      import {
+        Bill,
+        Beverage,
+        Appetizer,
+        MainCourse,
+        Dessert,
+      } from "./index.js";
+
+      /* Register btnOrder for onclick function  */
+      document.getElementById("btnOrder").onclick = function () {
+        //Get beverages
+        const beveragesEl = document.getElementById("beverages");
+        const beverages = beveragesEl.getElementsByTagName("input");
+
+        //Get appetizers
+        const appetizersEl = document.getElementById("appetizers");
+        const appetizers = appetizersEl.getElementsByTagName("input");
+
+        //Get main courses
+        const maincoursesEl = document.getElementById("main-courses");
+        const maincourses = maincoursesEl.getElementsByTagName("input");
+
+        //Get desserts
+        const dessertsEl = document.getElementById("desserts");
+        const desserts = dessertsEl.getElementsByTagName("input");
+
+        //Create a bill instance
+        const bill = new Bill();
+
+        //loop through beverages and add checked one to bill
+        for (let i = 0; i < beverages.length; i++) {
+          if (beverages[i].checked) {
+            bill.addBeverage(
+              new Beverage(beverages[i].name, beverages[i].value)
+            );
+          }
+        }
+
+        //loop through appetizers and add checked one to bill
+        for (let i = 0; i < appetizers.length; i++) {
+          if (appetizers[i].checked) {
+            bill.addAppetizer(
+              new Appetizer(appetizers[i].name, appetizers[i].value)
+            );
+          }
+        }
+
+        //loop through main courses and add checked one to bill
+        for (let i = 0; i < maincourses.length; i++) {
+          if (maincourses[i].checked) {
+            bill.addMainCourse(
+              new MainCourse(maincourses[i].name, maincourses[i].value)
+            );
+          }
+        }
+
+        //loop through desserts and add checked one to bill
+        for (let i = 0; i < desserts.length; i++) {
+          if (desserts[i].checked) {
+            bill.addDessert(new Dessert(desserts[i].name, desserts[i].value));
+          }
+        }
+
+        //Bind the results to order-total div
+        document.getElementById("total").innerHTML =
+          "Your total is " + bill.getTotal();
+      };
+    </script>
+  </body>
+</html>
