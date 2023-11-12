@@ -1,0 +1,82 @@
+/*
+    Title: lates-calorie.css
+    Author: Jeremy Lates
+    Date: 11/10/2023
+*/
+body {
+  width: 960px;
+  margin: auto;
+  font-family: "Oswald", Verdana, Arial, sans-serif;
+}
+.app-header {
+  /*text-align: center;*/
+  margin-left: 175px;
+}
+.card-title {
+  text-align: center;
+  color: darkblue;
+}
+.input-card {
+  width: 500px;
+  height: 200px;
+  margin-left: 215px;
+  box-shadow: 5px 5px 5px 5px grey;
+}
+.results-card {
+  width: 500px;
+  height: 175px;
+  margin-left: 215px;
+  margin-top: 20px;
+  box-shadow: 5px 5px 5px 5px grey;
+}
+#btnSearch {
+  background-color: darkblue;
+  color: white;
+  box-shadow: none;
+  border: 0px;
+  margin-left: 50px;
+  width: 250px;
+}
+#lblFoodItem {
+  margin-left: 50px;
+}
+#assign-results-text {
+  margin-left: 20px;
+}
+
+#home-div {
+  margin-left: 215px;
+}
+#foodList {
+  /* float: right; */
+  margin-left: 50px;
+  color: #df546a;
+  font: 12px;
+  letter-spacing: 2px;
+}
+table {
+  border-collapse: collapse;
+  /*
+  width: 95%;
+   margin-bottom: 30px;
+  margin-left: 10px; */
+}
+td,
+th {
+  border: 1px solid grey;
+}
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4f3674;
+  color: white;
+  /* background-color: var(--table-header-background-color);
+  color: var(--table-header-color); */
+}
+tr:hover {
+  background-color: #d6a800;
+  /* background-color: var(--table-hover-background-color);
+  color: var(--table-hover-color); */
+  cursor: pointer;
+}
