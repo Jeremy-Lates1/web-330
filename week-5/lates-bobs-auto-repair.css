@@ -25,8 +25,9 @@ body {
   box-shadow: 5px 5px 5px 5px grey;
 }
 .results-card {
+  display: none;
   width: 500px;
-  height: 175px;
+  height: 225px;
   margin-left: 215px;
   margin-top: 20px;
   box-shadow: 5px 5px 5px 5px grey;

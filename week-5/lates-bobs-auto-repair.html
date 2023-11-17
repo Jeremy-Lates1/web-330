@@ -109,7 +109,11 @@
         for (let myProduct of shoppingCart) {
           addRows(myProduct);
         }
-        //Disable cartIcon onclick because do not want append to table
+
+        //Display items in the cart
+        document.getElementById("results-card").style.display = "block";
+
+        //Disable cartIcon onclick because do not want append to table off the page. Out of scope for this project
         document.getElementById("cartIcon").onclick = null;
       };
       function addRows(product) {
