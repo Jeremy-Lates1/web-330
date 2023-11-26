@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WEB 330 – Enterprise JavaScript II</title>
+    <link rel="stylesheet" href="../theme.css" />
+    <link rel="stylesheet" href="../site.css" />
+    <link rel="stylesheet" href="flex-layout.css" />
+    <link rel="stylesheet" href="lates-future-value.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!--
+        Title: lates-future-value.html.html
+        Author: Jeremy Lates
+        Date: 11/25/2023
+        Original Author: Code adapted from Professor Krasso class examples
+        Description: 
+
+        Programming cites
+        1. Code adapted from https://www.w3schools.com/html/html_form_input_types.asp
+        2. COde adapted from https://www.w3schools.com/jsref/met_document_queryselector.asp
+        3. Code adapted from https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_date_obj
+      
+
+
+    -->
+
+    <div class="container">
+      <h1 class="app-header">Welcome to the Future Value App!</h1>
+      <div class="card">
+        <h3 class="card-title">Future Value Calculator</h3>
+
+        <div id="errorLog" class="danger"></div>
+        <div class="row">
+          <div class="col-1"></div>
+          <div class="col-2"></div>
+          <div class="col-3"></div>
+          <div class="col-4"></div>
+          <div class="col-5">
+            <div class="form-field">
+              <label for="txtMonthlyPayment">Monthly Payment:</label>
+            </div>
+            <div class="form-field">
+              <label for="txtYearlyRate">Interest Rate:</label>
+            </div>
+            <div class="form-field">
+              <label for="listNumOfYears">Number of Years:</label>
+            </div>
+          </div>
+          <div class="col-6"></div>
+          <div class="col-7">
+            <div class="form-field">
+              <input type="text" id="txtMonthlyPayment" />
+            </div>
+            <div class="form-field">
+              <input type="text" id="txtYearlyRate" />
+              <i class="danger">Enter 11% as 11.1</i>
+            </div>
+
+            <div class="form-field">
+              <select
+                name="listNumOfYears"
+                id="listNumOfYears"
+                class="drop-down-menu"
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-8"></div>
+          <div class="col-9"></div>
+          <div class="col-10"></div>
+          <div class="col-11"></div>
+          <div class="col-12"></div>
+        </div>
+        <div class="form-field">
+          <button id="btnCalculate">Calculate</button>
+        </div>
+      </div>
+      <div id="home-div">
+        <a class="return-home" href="../index.html">Return</a>
+      </div>
+      <div class="results-card">
+        <!-- <h3 class="card-title">Calculation as of</h3> -->
+        <span id="today"></span>
+        <div id="futureValue" class="card-content"></div>
+      </div>
+    </div>
+    <script type="module">
+      import { FinanceCalculator } from "./index.js";
+      import { Validator } from "./index.js";
+
+      //Set local date
+      document.querySelector(
+        "#today"
+      ).innerHTML = `Calculation as of ${new Date().toLocaleDateString(
+        "en-US"
+      )}`;
+
+      //Handle btnCalculator click and begin calculating future value
+      document.getElementById("btnCalculate").onclick = function () {
+        //Clear futureValue field
+        document.getElementById("futureValue").innerHTML = "";
+
+        //Get the user supplied monthly payment from the page
+        let monthlyPayment = document.getElementById("txtMonthlyPayment").value;
+        // console.log(`Monthly Payment: ${monthlyPayment}`);
+
+        //Get the user supplied rate from the page
+        let rate = document.getElementById("txtYearlyRate").value;
+
+        //Get the user supplied years from the page
+        let years = document.getElementById("listNumOfYears").value;
+        // console.log(`Years: ${years}`);
+
+        //Get the error log element
+        let errorLogEl = document.getElementById("errorLog").value;
+
+        //Create a new monthlyPaymentValidator
+        let monthlyPaymentValidator = new Validator(
+          "Monthly Payment",
+          monthlyPayment
+        );
+
+        /* Set monthlyPaymentValidator required fields here   */
+        monthlyPaymentValidator.addRequiredField();
+
+        monthlyPaymentValidator.addRequiredFloatField();
+
+        monthlyPaymentValidator.addFloatMinField(100);
+
+        monthlyPaymentValidator.addFloatMaxField(500);
+
+        //Create a new rateValidator
+        let rateValidator = new Validator("Interest Rate", rate);
+
+        /* Set rateValidator required fields here   */
+
+        rateValidator.addRequiredField();
+
+        rateValidator.addRequiredFloatField();
+
+        rateValidator.addFloatMinField(5);
+
+        rateValidator.addFloatMaxField(30);
+
+        //Create an empty error log array
+        let errorLog = [];
+
+        //If monthlyPaymentValidator is not valid log the error in the error log
+        if (!monthlyPaymentValidator.validate()) {
+          for (let msg of monthlyPaymentValidator.messages) {
+            console.log(`Message: ${msg}`);
+            errorLog.push(msg);
+          }
+        }
+
+        //If rateValidator is not valid log the error in the error log
+        if (!rateValidator.validate()) {
+          // console.log(
+          //   `rateValidator.messages count : ${rateValidator.messages.length}`
+          // );
+          for (let msg of rateValidator.messages) {
+            console.log(`Message: ${msg}`);
+            errorLog.push(msg);
+          }
+        }
+        // console.log(
+        //   `monthlyPaymentValidator.validate() : ${monthlyPaymentValidator.validate()}`
+        // );
+        // console.log(`rateValidator.validate() : ${rateValidator.validate()}`);
+
+        //Check to see if we can give the user the future value or write to the error log
+        if (monthlyPaymentValidator.validate() && rateValidator.validate()) {
+          console.log("Process future value...");
+          document.getElementById("errorLog").innerHTML = "";
+
+          let futureValue = FinanceCalculator.calculateFutureValue(
+            monthlyPayment,
+            rate,
+            years
+          );
+          console.log(`futureValue : ${JSON.stringify(futureValue)}`);
+
+          /* Tried to get the convert to currency working but was unable to. Error message says Value Currency out of range for Intl.NumberFormat options style  */
+          // document.getElementById(
+          //   "futureValue"
+          // ).innerHTML = `The future value is $${FinanceCalculator.convertToCurrency(
+          //   JSON.stringify(futureValue)
+          // )}`;
+          document.getElementById(
+            "futureValue"
+          ).innerHTML = `The future value is $${futureValue}`;
+        } else {
+          console.log("Report Errors...");
+          document.getElementById("errorLog").innerHTML = "";
+
+          let errorLogMessage = "<ul>";
+
+          //loop through errorLog and add to list
+          for (let errorMessage of errorLog) {
+            console.log(`error message : ${errorMessage}`);
+            errorLogMessage += "<li>" + errorMessage + "</li>";
+          }
+
+          errorLogMessage += "</ul>";
+
+          document.getElementById("errorLog").innerHTML = errorLogMessage;
+        }
+      };
+    </script>
+  </body>
+</html>

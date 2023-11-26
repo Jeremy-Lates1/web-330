@@ -1,0 +1,81 @@
+/*============================================
+ Title:  lates-future-value.css
+ Author: Jeremy Lates
+ Original Author: Code adapted from Professor Krasso class examples
+ Date:   11/17/2023
+ Description:  
+ 
+===========================================
+*/
+body {
+  width: 960px;
+  margin: auto;
+}
+.card {
+  margin-left: 150px;
+  box-shadow: 5px 5px 5px 5px grey;
+  width: 600px;
+  height: 300px;
+}
+.card-title {
+  text-align: center;
+  margin: 0px;
+  padding: 0px;
+}
+.danger {
+  /* float: right; */
+  color: #df546a;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+.form-label {
+  display: inline-block;
+  padding-top: 1 rem;
+}
+
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-6,
+.col-8,
+.col-9,
+.col-10,
+.col-11,
+.col-12 {
+  width: 0%;
+}
+.col-5 {
+  width: 25%;
+}
+.col-7 {
+  width: 50%;
+  margin-left: 0px;
+}
+#btnCalculate {
+  margin-left: 65px;
+  margin-top: 10px;
+  background-color: darkblue;
+  color: white;
+  box-shadow: none;
+  border: 0px;
+  width: 250px;
+  height: 30px;
+}
+.return-home {
+  margin-left: 150px;
+}
+.results-card {
+  margin-left: 150px;
+  box-shadow: 5px 5px 5px 5px grey;
+  width: 600px;
+  height: 75px;
+}
+#today,
+#futureValue {
+  margin-left: 200px;
+}
+#today {
+  color: blue;
+  text-align: center;
+}
