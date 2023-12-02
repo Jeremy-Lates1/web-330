@@ -9,7 +9,9 @@
  1. Code adapted from https://www.w3schools.com/howto/howto_css_list_without_bullets.asp
 ===========================================
 */
-
+body {
+  width: 960px;
+}
 table {
   border-collapse: collapse;
   margin-left: 10px;
