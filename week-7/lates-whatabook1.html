@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WEB 330 – Enterprise JavaScript II</title>
+    <link rel="stylesheet" href="../theme.css" />
+    <link rel="stylesheet" href="../site.css" />
+    <link rel="stylesheet" href="lates-whatabook1.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <!--
+        Title: lates-whatabook1.html.html
+        Author: Jeremy Lates
+        Date: 12/01/2023
+        Original Author: Code adapted from Professor Krasso class examples
+        Description: 
+
+        Programming cites
+        1. Code adapted from https://developer.mozilla.org/en-US/docs/Web/API/Document/DOMContentLoaded_event
+        2. Code adapted from https://stackoverflow.com/questions/37693982/how-to-fetch-xml-with-fetch-api
+        3. Code adapted from https://www.w3schools.com/jsref/prop_node_textcontent.asp
+
+    -->
+  <body>
+    <di class="container">
+      <h1 class="app-header">Welcome to WhatABook, Part 1 App!</h1>
+      <div class="card-content select-card" >
+        <h2 class="card-title">Book Listing</h2>
+        <div id="bookList"></div>
+      
+      </div>
+      <div id="home-div">
+        <a class="return-home" href="../index.html">Return</a>
+      </div>
+      <div id="results-card" class="card-content" ><h2 class="card-title">Selected Book</h2>
+      <div id="selectedBook"></div>
+        <!--Table data will be bounded here-->
+      </div>
+    </div>
+    <script>
+      addEventListener("DOMContentLoaded", (event) => {
+      
+        //Fetch the books.xml data
+        let fileName = "./books.xml";
+        let getBooks = fetch(fileName);
+        getBooks.then(res => res.text())
+                .then(data => {
+                  //console.log(`Books Data ${data}`);
+
+                  let domParser = new DOMParser();
+                  let xmlBooks = domParser.parseFromString(data,"text/xml");
+                  loadBooks(xmlBooks);
+
+                })
+                .catch(err => {console.log(`Error :  ${err}`);})
+        
+      });
+      function loadBooks(xml)
+      {
+        console.log(`loadBooks Function`);
+
+        let books = xml.getElementsByTagName("book");
+
+        let tableData = '<table id="bookTable"><tr><th>ISBN</th><th>Title</th><th>Description</th><th>Pages</th><th>Author</th></tr>';
+        
+          //Loop through books and set fields for table
+          for (let book of books)
+          {
+              let isbn = book.getElementsByTagName("isbn")[0].childNodes[0].nodeValue;
+              //console.log(`isbn : ${isbn}`);
+              let title = book.getElementsByTagName("title")[0].childNodes[0].nodeValue;
+              //console.log(`title : ${title}`);
+              let description = book.getElementsByTagName("description")[0].childNodes[0].nodeValue;
+              //console.log(`description : ${description}`);
+              let pages = book.getElementsByTagName("pages")[0].childNodes[0].nodeValue;
+              //console.log(`pages : ${pages}`);
+              let authors = book.getElementsByTagName("authors")[0].childNodes[0].nodeValue;
+              //console.log(`authors : ${authors}`);
+
+              tableData += `<tr><td data-value="ISBN"><a href="#" class="isbn-link">${isbn}</a></td><td>${title}</td><td>${description}</td><td>${pages}</td><td>${authors}</td></tr>`;
+
+          }
+
+        //Bind table to bookList table
+        tableData += "</table>";
+       // console.log(`tableData : ${tableData}`);
+         let myTable =  document.getElementById("bookList");
+       //  console.log(`myTable : ${myTable} `);
+         myTable.innerHTML += tableData;
+         
+        // Add click event to ISBN item  
+        addIsbnClickEvents();
+
+      }
+      function addIsbnClickEvents(){
+        /*
+          Add click event listener to ISBN item
+        */
+        console.log(`addIsbnClickEvents Function`);
+
+          let viewButtons = document.querySelectorAll("#bookTable tbody .isbn-link");
+        
+
+          for (let index = 0; index < viewButtons.length; index++ ){
+
+            viewButtons[index].addEventListener("click",anchorClicked);
+            console.log(`viewButtons : ${viewButtons[index]}`);
+
+          }
+
+
+
+      }
+      function anchorClicked(e){
+        console.log("anchorClicked function");
+        /* Big Note
+          I could not get the code to work as outlined in specs.  
+          I used the textContent of row to get values instead as a
+          workaround.
+        */
+
+        e.preventDefault();
+
+        let self = this;       
+        let cell = self.parentElement;
+        let row = cell.parentElement;
+
+        //Build unordered list of book details selected 
+        let bookData = `<ul class="recordsUl"><li><b>ISBN:</b> ${row.cells[0].textContent}</li><li><b>Title:</b> ${row.cells[1].textContent}</li><li><b>Description</b> ${row.cells[2].textContent}</li><li><b>Pages:</b> ${row.cells[3].textContent}</li><li><b>Author:</b> ${row.cells[4].textContent}</li></ul>`;
+
+
+        //Bind to selectedBook div
+        document.getElementById("selectedBook").innerHTML = bookData;
+
+        // let data = row.querySelectorAll("td");
+        // for (let field of data){
+        //    console.log(`Data : ${field.dataset}`);
+        // }
+
+
+      }
+
+      
+    </script>
+  </body>
+</html>

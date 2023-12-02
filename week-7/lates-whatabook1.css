@@ -1,0 +1,69 @@
+/*============================================
+ Title:  lates-whatabook1.css
+ Author: Jeremy Lates
+ Original Author: Code adapted from Professor Krasso class examples
+ Date:   12/02/2023
+ Description:  
+ 
+
+ 1. Code adapted from https://www.w3schools.com/howto/howto_css_list_without_bullets.asp
+===========================================
+*/
+
+table {
+  border-collapse: collapse;
+  margin-left: 10px;
+  margin-right: 20px;
+}
+td,
+th {
+  border: 1px solid grey;
+}
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4f3674;
+  color: white;
+  /* background-color: var(--table-header-background-color);
+  color: var(--table-header-color); */
+}
+tr:hover {
+  background-color: #d6a800;
+  /* background-color: var(--table-hover-background-color);
+  color: var(--table-hover-color); */
+  cursor: pointer;
+}
+.select-card {
+  margin-left: 150px;
+  box-shadow: 5px 5px 5px 5px grey;
+  width: 600px;
+  height: 450px;
+}
+.card-title {
+  text-align: center;
+  color: #4f3674;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+.recordsUl {
+  list-style-type: none;
+}
+#bookList {
+  margin-left: 20px;
+}
+#selectedBook {
+  margin-left: 50px;
+}
+#results-card {
+  margin-left: 150px;
+  width: 600px;
+  height: 200px;
+  box-shadow: 5px 5px 5px 5px grey;
+}
+#home-div {
+  margin-left: 150px;
+}
+a {
+  color: #4f3674;
+}
