@@ -12,6 +12,9 @@
 body {
   width: 960px;
 }
+container {
+  margin-left: 300px;
+}
 table {
   border-collapse: collapse;
   margin-left: 10px;
