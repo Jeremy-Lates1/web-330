@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WEB 330 – Enterprise JavaScript II</title>
+    <link rel="stylesheet" href="../theme.css" />
+    <link rel="stylesheet" href="../site.css" />
+    <link rel="stylesheet" href="lates-whatabook2.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <!--
+        Title: lates-whatabook2.html.html
+        Author: Jeremy Lates
+        Date: 12/08/2023
+        Original Author: Code adapted from Professor Krasso class examples and class help
+        
+        Assignment note:  I was unable to complete this assignment because I was unable to get
+        the correct data back from the api.  After doing the fetch to load the table I get back 
+        data but not the data that is expected.  The log output tells the story.
+
+
+        Programming cites
+        1. Code adapted from 
+
+    -->
+  <body>
+    <div class="container">
+      <h1 class="app-header">Welcome to WhatABook, Part 2 App!</h1>
+      <div class="card-content select-card">
+        <h2 class="card-title">Book Listing</h2>
+        <div id="bookList"></div>
+      </div>
+      <div id="home-div">
+        <a class="return-home" href="../index.html">Return</a>
+      </div>
+      <div id="results-card" class="card-content">
+        <h2 class="card-title">Selected Book</h2>
+        <div id="selectedBook"></div>
+        <!--Table data will be bounded here-->
+      </div>
+    </div>
+    <script type="module">
+      import HttpClient from "./http-client.js";
+
+      //Create an new http client
+      let http = new HttpClient();
+
+      //Create a list of isbns we can pull from api
+      const isbns = [
+        "0345339681",
+        "0261103571",
+        "9780593099322",
+        "9780261102361",
+        "9780261102378",
+        "9780590302715",
+        "9780316769532",
+        "9780743273565",
+        "9780590405959",
+      ];
+
+      //Parameters for the get http.get call
+      const params = {
+        bibkeys: `ISBN:${isbns.join(",")}`,
+        format: "json",
+        iscmd: "details",
+      };
+
+      /*
+         Get the data from calling http.get method
+
+         Note: **Major issue**  I do not see title, description, pages, or authors when I console log the data in http client class. See output
+         I have tried debugging this code to no end.  I am not sure why I am not getting the expected data back. This has made it so I
+         cannot complete this assignment.
+
+      */
+      http
+        .get("https://openlibrary.org/api/books", params)
+        .then((res) => {
+          console.log(`response is ${res}`);
+
+          //Bind to table
+          document.getElementById("bookList").innerHTML = buildHtmlString(
+            res,
+            "table"
+          );
+
+          addIsbnClickEvents();
+        })
+        .catch((e) => {
+          console.log(`Error Message :: ${e}`);
+        });
+
+      /*
+       This function is used to get the book information to bind the selection
+
+       */
+      function getBook(e) {
+        e.preventDefault();
+
+        let self = this;
+
+        let isbn = self.innerText;
+
+        const params = {
+          bibkeys: `ISBN:${isbns.join(",")}`,
+          format: "json",
+          iscmd: "details",
+        };
+
+        let url = "https://openlibrary.org/api/books";
+
+        http
+          .get(url, params)
+          .then((res) => {
+            console.log(res);
+
+            //To DO : Bind to main page
+            // document.getElementById("selectedBook").innerHTML = buildHtmlString(
+            //   res,
+            //   url
+            // );
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+      /*
+       This function builds either the table or the results card
+
+       */
+      function buildHtmlString(res, format) {
+        console.log(`format : ${format}`);
+        console.log(`res : ${JSON.stringify(res)}`);
+
+        let tableString = ""; //To DO: supply it with an HTML string for a table header.
+        let urlString = "";
+
+        for (let key in res) {
+          console.log("Loop");
+          urlString += `<ul style="list-style-type: none;">`;
+
+          if (res.hasOwnProperty(key)) {
+            let authors = [];
+            if (res[key].details.authors) {
+              console.log(
+                `res[key].details.authors : ${res[key].details.authors}`
+              );
+              authors = res[key].details.authors.map(function (author) {
+                return author.name;
+              });
+            }
+
+            let book = {
+              isbn: res[key].details.isbn_13
+                ? res[key].details.isbn_13
+                : res[key].details.isbn_10,
+              title: res[key].details.title,
+              description: res[key].details.subtitle
+                ? res[key].details.subtitle
+                : "N/A",
+              pages: res[key].details.number_of_pages
+                ? res[key].details.number_of_pages
+                : "N/A",
+              authors: authors.join(","),
+            };
+
+            urlString += ``; //To DO  adding table first then I will do selection functionality...
+            tableString += `<tr><td><a href="#" class="isbn-link">${book.isbn}</a><td><td>${book.title}</td><td>${book.description}</td><td>${book.pages}</td><td>${book.authors}</td></tr>`;
+          }
+          if (format === "table") {
+            console.log(`Table String ${tableString}`);
+            return tableString;
+          } else return urlString;
+        }
+      }
+
+      function addIsbnClickEvents() {
+        /*
+           Add click event listener to ISBN item
+         */
+        console.log(`addIsbnClickEvents Function`);
+
+        let viewButtons = document.querySelectorAll(
+          "#bookTable tbody .isbn-link"
+        );
+
+        for (let index = 0; index < viewButtons.length; index++) {
+          viewButtons[index].addEventListener("click", anchorClicked);
+          console.log(`viewButtons : ${viewButtons[index]}`);
+        }
+      }
+    </script>
+  </body>
+</html>
